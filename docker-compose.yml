@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  rabbitmq:
+    image: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+
+  sender:
+    build: ./sender/
+    depends_on:
+      - rabbitmq
+    restart: on-failure
+
+  listener:
+    build: ./listener/
+    depends_on:
+      - rabbitmq
+    restart: on-failure
